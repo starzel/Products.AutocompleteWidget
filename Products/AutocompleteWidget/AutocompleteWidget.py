@@ -29,7 +29,6 @@ class AutocompleteWidget(StringWidget):
             
         vocab = field.Vocabulary(instance)
         
-        
         if self.actb_filter_bogus==1:
             
             # make delimiters uniform
@@ -62,7 +61,10 @@ class AutocompleteWidget(StringWidget):
                         result.append(keyword)
                     
             else: 
-                result = value
+                try:
+                    result = vocab.getKey(value)
+                except AttributeError: 
+                    result = value
             
         return result,{}
 

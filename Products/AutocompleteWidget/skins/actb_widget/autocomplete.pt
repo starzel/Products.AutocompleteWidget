@@ -16,11 +16,11 @@
                       tal:define="vocab python:field.Vocabulary(here);
                                   value python:accessor();
                                   display python:here.displayValue(vocab, value)">
-		<!---<p tal:content="vocab" />--->
-		<!---<p tal:content="value" />--->
-		<!---<p tal:content="display" />--->
-		<span tal:replace="structure display" />
-	</metal:view_macro>
+        <!---<p tal:content="vocab" />--->
+        <!---<p tal:content="value" />--->
+        <!---<p tal:content="display" />--->
+        <span tal:replace="structure display" />
+    </metal:view_macro>
 
     <metal:define define-macro="edit">
 
@@ -28,30 +28,30 @@
 
             <metal:fill fill-slot="widget_body"
                         tal:define="vocab python:field.Vocabulary(here);
-							        initializing python:request.get(fieldName, None)==None or request.get(fieldName, None)=='';
-									myvalue python:test(field.type=='lines', ','.join(value), value);
-                                    widget_value python:test(initializing,  test(field.type=='lines', ','.join(value), value), value)">
-        <script type="text/javascript"
-                tal:define="esc_vocab python: [v.replace('\'','\\\'') for v in vocab];
-                            vocab_list python: '\'' + '\',\''.join(esc_vocab) + '\''"
-                tal:content="string:
-              var array_${fieldName}=new Array(${vocab_list});
-        ">
-        </script>
-		<input onfocus='actb(this,event,customarray, timeout, limit, firsttext);'
-			   type='text'
-			   value=''
-			   id=''
-			   autocomplete="off"
-		       tal:attributes="name fieldName;
-							   value widget_value;
-							   size widget/size;
-							   maxlength widget/maxlength;
-							   tabindex tabindex/next;
-							   id python:field.getName() + '_widget';
-							   onfocus string:actb(this, event, array_${fieldName}, ${widget/actb_timeout},${widget/actb_lim},${widget/actb_firsttext}, ${widget/actb_expand_onfocus}, ${widget/actb_multi_select})"
-               
-			    />
+                                    values python:vocab.values();
+                                    value python:accessor();
+                                    display python:here.displayValue(vocab, value);
+                                    initializing python:request.get(fieldName, None)==None or request.get(fieldName, None)=='';
+                                    myvalue python:test(field.type=='lines', ','.join(display), display);
+                                    widget_value python:test(initializing,  test(field.type=='lines', ','.join(display), display), display)">
+                <script type="text/javascript"
+                        tal:define="esc_values python: [v.replace('\'','\\\'') for v in values];
+                                    values_list python: '\'' + '\',\''.join(esc_values) + '\''"
+                        tal:content="string:var array_${fieldName}=new Array(${values_list});">
+                </script>
+                <input onfocus='actb(this,event,customarray, timeout, limit, firsttext);'
+                       type='text'
+                       value=''
+                       id=''
+                       autocomplete="off"
+                       tal:attributes="name fieldName;
+                                       value widget_value;
+                                       size widget/size;
+                                       maxlength widget/maxlength;
+                                       tabindex tabindex/next;
+                                       id python:field.getName() + '_widget';
+                                       onfocus string:actb(this, event, array_${fieldName}, ${widget/actb_timeout},${widget/actb_lim},${widget/actb_firsttext}, ${widget/actb_expand_onfocus}, ${widget/actb_multi_select})"
+                        />
         
         
             </metal:fill>
