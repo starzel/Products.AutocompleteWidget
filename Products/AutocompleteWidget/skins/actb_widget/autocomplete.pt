@@ -29,7 +29,6 @@
             <metal:fill fill-slot="widget_body"
                         tal:define="vocab python:field.Vocabulary(here);
                                     values python:vocab.values();
-                                    value python:accessor();
                                     display python:here.displayValue(vocab, value);
                                     initializing python:request.get(fieldName, None)==None or request.get(fieldName, None)=='';
                                     myvalue python:test(field.type=='lines', ','.join(display), display);
